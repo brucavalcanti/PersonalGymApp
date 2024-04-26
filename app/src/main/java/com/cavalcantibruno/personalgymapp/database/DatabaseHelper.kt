@@ -20,7 +20,7 @@ class DatabaseHelper(context: Context):SQLiteOpenHelper(context,NOME_BD,null,VER
     }
 
 
-        val nomeTabelas = arrayOf("Segunda","Terca","Quarta","Quinta","Sexta")
+        val nomeTabelas = arrayOf("Segunda","Terca","Quarta","Quinta","Sexta","Sabado","Domingo")
 
     override fun onCreate(db: SQLiteDatabase?) {
         //Tabela para segunda

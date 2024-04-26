@@ -15,11 +15,7 @@
         <activity
             android:name=".ListaExercicioActivity"
             android:exported="false" />
-        <activity
-            android:name=".ListaExercicio"
-            android:exported="false"
-            android:label="@string/title_activity_lista_exercicio"
-            android:theme="@style/Theme.PersonalGymApp" />
+
         <activity
             android:name=".MainActivity"
             android:exported="true">
