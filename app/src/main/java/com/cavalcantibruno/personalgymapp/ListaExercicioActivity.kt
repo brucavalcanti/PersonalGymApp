@@ -25,6 +25,7 @@ class ListaExercicioActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val nome = intent.getStringExtra("NomeDatabase").toString()
+        binding.nomeDia.text = nome
         binding.fabAdicionar.setOnClickListener {
             val intent = Intent(this,AdicionarExercicioActivity::class.java)
             intent.putExtra("NomeDatabase",nome)
