@@ -17,6 +17,7 @@ class DatabaseHelper(context: Context):SQLiteOpenHelper(context,NOME_BD,null,VER
         const val OBS = "observacao"
         const val DATABASE = "DatabaseHelper"
         const val NOME_BD ="PersonalGymApp.db"
+        const val DATA_CADASTRO_EXERCICIO = "data_cadastro"
     }
 
 
@@ -31,10 +32,11 @@ class DatabaseHelper(context: Context):SQLiteOpenHelper(context,NOME_BD,null,VER
            val sql = "CREATE TABLE IF NOT EXISTS ${nomeTabelas[i]} (" +
                    "$ID_EXERCICIO INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT," +
                    "$NOME_EXERCICIO VARCHAR(70)," +
-                   "$SERIES TINYINT," +
-                   "$REPETICAO VARCHAR(10)," +
-                   "$CARGA TINYINT," +
-                   "$OBS VARCHAR(70));"
+                   "$SERIES TINYINT DEFAULT 0," +
+                   "$REPETICAO VARCHAR(10) DEFAULT '---', " +
+                   "$CARGA TINYINT DEFAULT 0," +
+                   "$OBS VARCHAR(70) DEFAULT '---'," +
+                   "$DATA_CADASTRO_EXERCICIO DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP);"
            try {
                db?.execSQL(sql)
                Log.i(DATABASE, "onCreate: Sucesso ao Criar a tabela ${nomeTabelas[i]} ")

@@ -6,7 +6,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.cavalcantibruno.personalgymapp.databinding.ItemExercicioBinding
 import com.cavalcantibruno.personalgymapp.model.Exercicio
 
-class ExercicioAdapter:RecyclerView.Adapter<ExercicioAdapter.ExercicioViewHolder>() {
+class ExercicioAdapter(
+    val onClickExcluir:(Int)-> Unit,
+    val onClickEditar:(Exercicio) -> Unit
+):RecyclerView.Adapter<ExercicioAdapter.ExercicioViewHolder>() {
 
     private var listaExercicios:List<Exercicio> = emptyList()
 
@@ -27,12 +30,21 @@ class ExercicioAdapter:RecyclerView.Adapter<ExercicioAdapter.ExercicioViewHolder
             fun binding(exercicio: Exercicio)
             {
                 binding.textNome.text=exercicio.nomeExercicio
-                binding.textSeries.text = exercicio.qtdSeries.toString()
+                binding.textSeries.text = exercicio.qtdSeries.toString() + "x"
                 binding.textRep.text = exercicio.qtdRepeticoes
-                binding.textCarga.text=exercicio.cargaExercicio.toString()
+                binding.textCarga.text=exercicio.cargaExercicio.toString() + "KG"
                 binding.textObs.text = exercicio.obsExercicio
+                binding.textData.text = exercicio.dataCadastro
+                binding.btnExcluir.setOnClickListener {
+                    onClickExcluir(exercicio.idExercicio)
+                }
+                binding.btnEditar.setOnClickListener {
+                    onClickEditar(exercicio)
+                }
             }
         }
+
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExercicioViewHolder {
         val itemExercicioBinding = ItemExercicioBinding.inflate(

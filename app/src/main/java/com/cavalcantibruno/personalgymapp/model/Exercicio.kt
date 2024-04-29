@@ -8,5 +8,6 @@ data class Exercicio(
     val qtdSeries:Int,
     val qtdRepeticoes:String,
     val cargaExercicio: Int,
-    val obsExercicio:String
+    val obsExercicio:String,
+    val dataCadastro:String
 ) :Serializable

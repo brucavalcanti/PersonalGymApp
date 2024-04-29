@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cavalcantibruno.personalgymapp.adapter.ExercicioAdapter
 import com.cavalcantibruno.personalgymapp.database.ExercicioDAO
@@ -26,9 +27,9 @@ class ListaExercicioActivity : AppCompatActivity() {
         val nome = intent.getStringExtra("NomeDatabase").toString()
         binding.fabAdicionar.setOnClickListener {
             val intent = Intent(this,AdicionarExercicioActivity::class.java)
+            intent.putExtra("NomeDatabase",nome)
             startActivity(intent)
         }
-
 
         listaExercicio = ExercicioDAO(this).listar(nome)
 
@@ -38,9 +39,32 @@ class ListaExercicioActivity : AppCompatActivity() {
                     "${exercicio.cargaExercicio} - ${exercicio.obsExercicio}}\n")
         }
 
-        exercicioAdapter = ExercicioAdapter()
+        exercicioAdapter = ExercicioAdapter({id->confirmarExclusao(id)},{exercicio->editar(exercicio)})
         binding.rvListaExercicio.adapter = exercicioAdapter
         binding.rvListaExercicio.layoutManager = LinearLayoutManager(this)
+    }
+
+    private fun editar(exercicio:Exercicio) {
+        val nome = intent.getStringExtra("NomeDatabase").toString()
+        val intent = Intent(this,AdicionarExercicioActivity::class.java)
+        intent.putExtra("exercicio",exercicio)
+        intent.putExtra("NomeDatabase",nome)
+        startActivity(intent)
+    }
+
+    private fun confirmarExclusao(id: Int) {
+        val nome = intent.getStringExtra("NomeDatabase").toString()
+        val alertBuilder = AlertDialog.Builder(this)
+        alertBuilder.setTitle("Confirmar Exclusão")
+        alertBuilder.setMessage("Deseja excluir este exercício?")
+        alertBuilder.setPositiveButton("Sim"){ _, _ ->
+            val tarefaDAO = ExercicioDAO(this)
+            tarefaDAO.remover(id,nome)
+            atualizarListaExercicio()
+        }
+        alertBuilder.setNegativeButton("Não"){ _, _ -> }
+
+        alertBuilder.create().show()
     }
 
     private fun atualizarListaExercicio()
